@@ -14,10 +14,10 @@ const clickCounter = 25;
 function Product( name ) {
     this.name = name;
     this.image = function image(){
-      if (this.image == 'sweep'){
+      if (this.name == 'sweep'){
         this.image = `./Img/${name}.png`;
     }
-    else if(this.image == 'usb'){
+    else if(this.name == 'usb'){
         this.image = `./Img/${name}.gif`;
     }
     else {

@@ -3,20 +3,31 @@
   }
   
   body {
+    background-color: teal;
     width: 960px;
     margin: auto;
   }
   header{
+      
+      background-color: white;
+      display: grid;
+      grid-template-columns: 100px fr;
       text-align: center;
+      color: blue;
+      margin-bottom: 30px;
+      
   }
   .image-section {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    
     gap: 10px;
   }
   .image-section img {
       width: 300px;;
       height: 250px;
+      margin: 0 6px;
+      
   }
   .image-section:hover .image {
     opacity: 0.3;
@@ -27,4 +38,10 @@
     color: white;
     margin-top: 20px;
     padding: 10px;
+    
+  }
+  footer{
+    background-color: white;
+    padding: 30px;
+    
   }
