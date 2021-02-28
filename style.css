@@ -1,0 +1,30 @@
+* {
+    box-sizing: border-box;
+  }
+  
+  body {
+    width: 960px;
+    margin: auto;
+  }
+  header{
+      text-align: center;
+  }
+  .image-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 10px;
+  }
+  .image-section img {
+      width: 300px;;
+      height: 250px;
+  }
+  .image-section:hover .image {
+    opacity: 0.3;
+  }
+  button{
+    border: 0;
+    background-color: green;
+    color: white;
+    margin-top: 20px;
+    padding: 10px;
+  }
