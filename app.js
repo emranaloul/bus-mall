@@ -31,22 +31,6 @@ function Product( name ) {
   this.image();
 }
 
-
-// Product.prototype.render = function() {
-
-//     if (this.image == 'sweep'){
-//         this.image =  `./Img/${name}.png`
-//     }
-//     else if(this.image == 'usb'){
-//         this.image = `./Img/${name}.gif`
-//     }
-//     else {
-//         this.image = `./Img/${name}.jpg`
-//     }
-    
-  // };
-  
-
  
 
 Product.all = [];
@@ -56,27 +40,45 @@ for( let i = 0; i < productsArray.length; i++ ) {
   new Product( productsArray[i] );
 }
 
-
+// let indexArray =[];
 
 function renderNewProduct() {
-    let leftIndex = randomNumber( 0, Product.all.length - 1 );
+  let leftIndex = randomNumber( 2, Product.all.length - 3 );
+    if (Product.counter % 2 == leftIndex % 2){
+      leftIndex += 0
+    } else{
+      leftIndex += 1
+    }
     leftImage.src = Product.all[leftIndex].image;
     leftImage.alt = Product.all[leftIndex].name;
     leftProductIndex = leftIndex;
 
-    let centerIndex;
-    do {
-      centerIndex = randomNumber( 0, Product.all.length - 1 );
-    } while( leftIndex == centerIndex );
+    let centerIndex = leftIndex - 2;
+    // do {
+    //   centerIndex = randomNumber( 0, Product.all.length - 1 );
+    //   if (Product.counter % 2 == centerIndex % 2){
+    //     centerIndex += 0
+    //   } else{
+    //     centerIndex += 1
+    //   }
+    // } while( leftIndex == centerIndex );
 
     centerImage.src = Product.all[centerIndex].image;
     centerImage.alt = Product.all[centerIndex].name;
     centerProductIndex = centerIndex;
 
-    let rightIndex;
-    do {
-      rightIndex = randomNumber( 0, Product.all.length - 1 );
-    } while( leftIndex == rightIndex || centerIndex == rightIndex);
+    let rightIndex = leftIndex + 2;
+    if (rightIndex == 20){
+       rightIndex = rightIndex - 20;
+    }
+    // do {
+    //   rightIndex = randomNumber( 0, Product.all.length - 1 );
+    //   if (Product.counter % 2 == rightIndex % 2){
+    //     rightIndex += 0
+    //   } else{
+    //     rightIndex += 1
+    //   }
+    // } while( leftIndex == rightIndex || centerIndex == rightIndex);
   
     rightImage.src = Product.all[rightIndex].image;
     rightImage.alt = Product.all[rightIndex].name;
@@ -86,9 +88,7 @@ function renderNewProduct() {
     Product.all[centerIndex].shown++;
     Product.all[rightIndex].shown++;
   
-  
-    // rightImage.src = Product.all[0].image;
-  }
+    }
   
   showButton();
 
@@ -113,10 +113,13 @@ function renderNewProduct() {
         renderNewProduct();
         showButton();
         
+        
   
         console.log( Product.all );
       }
       
+    } else{
+      renderChart();
     }
    
     
@@ -146,7 +149,15 @@ function viewResults(){
 
     // Helper function
     function randomNumber( min, max ) {
-        return Math.floor( Math.random() * ( max - min + 1 ) ) + min;
+      
+    //      Math.floor( Math.random() * ( max - min + 1 ) ) + min;
+    // if (Product.counter % 2 == randomNumber % 2){
+      return Math.floor( Math.random() * ( max - min + 1 ) ) + min;;
+      // }
+      //  else{     
+      //   return Math.ceil( Math.random() * ( max - min + 1 ) ) + min;
+      // }
+
     }
      
     renderNewProduct();
@@ -162,19 +173,74 @@ function viewResults(){
       btn.style.visibility = 'hidden';
     }
   };
-  //   function hideButtom(){
 
-  //   if (this.image == 'sweep'){
-  //       this.image =  `./Img/${name}.png`
-  //   }
-  //   else if(this.image == 'usb'){
-  //       this.image = `./Img/${name}.gif`
-  //   }
-  //   else {
-  //       this.image = `./Img/${name}.jpg`
-  //   }
-    
-  // };
+  function renderChart(){
+    let shownArray = [];
+    let clicksArray = [];
+    for( let i = 0; i < Product.all.length; i++){
+      shownArray.push(Product.all[i].shown);
+      clicksArray.push(Product.all[i].clicks);
+    }
   
+
+  var ctx = document.getElementById('myChart').getContext('2d');
+  var myChart = new Chart(ctx, {
+      type: 'bar',
+      data: {
+          labels: [ 'bag', 'banana','bathroom', 'boots', 'breakfast', 'bubblegum', 'chair', 'cthulhu', 'dog-duck', 'dragon', 'pen', 'pet-sweep', 'scissors', 'shark', 'sweep', 'tauntaun', 'unicorn', 'usb', 'water-can', 'wine-glass'],
+          datasets: [{
+              label: '# of show times',
+              data: shownArray,
+              backgroundColor: [
+                  'rgba(255, 99, 132, 0.2)',
+                  'rgba(54, 162, 235, 0.2)',
+                  'rgba(255, 206, 86, 0.2)',
+                  'rgba(75, 192, 192, 0.2)',
+                  'rgba(153, 102, 255, 0.2)',
+                  'rgba(255, 159, 64, 0.2)'
+              ],
+              borderColor: [
+                  'rgba(255, 99, 132, 1)',
+                  'rgba(54, 162, 235, 1)',
+                  'rgba(255, 206, 86, 1)',
+                  'rgba(75, 192, 192, 1)',
+                  'rgba(153, 102, 255, 1)',
+                  'rgba(255, 159, 64, 1)'
+              ],
+              borderWidth: 1
+          },
+          {
+            label: '# of Clicks',
+            data: clicksArray,
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
+        }]
+      },
+      options: {
+          scales: {
+              yAxes: [{
+                  ticks: {
+                      beginAtZero: true
+                  }
+              }]
+          }
+      }
+  });
+}
   
   
