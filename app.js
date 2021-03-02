@@ -6,6 +6,7 @@ const leftImage = document.getElementById( 'leftImage' );
 const centerImage = document.getElementById( 'centerImage' );
 const rightImage = document.getElementById( 'rightImage' );
 
+
 let leftProductIndex = 0;
 let centerProductIndex = 0;
 let rightProductIndex = 0;
@@ -83,10 +84,18 @@ function renderNewProduct() {
     rightImage.src = Product.all[rightIndex].image;
     rightImage.alt = Product.all[rightIndex].name;
     rightProductIndex = rightIndex;
-  
+
+    Product.all[leftIndex].shown = Number(localStorage.getItem(Product.all[leftIndex].name+'_timeOfShown'));
+    Product.all[centerIndex].shown = Number(localStorage.getItem(Product.all[centerIndex].name+'_timeOfShown'));
+    Product.all[rightIndex].shown = Number(localStorage.getItem(Product.all[rightIndex].name+'_timeOfShown'));
+
     Product.all[leftIndex].shown++;
     Product.all[centerIndex].shown++;
     Product.all[rightIndex].shown++;
+   
+    localStorage.setItem(Product.all[leftIndex].name+'_timeOfShown', Product.all[leftIndex].shown);
+    localStorage.setItem(Product.all[centerIndex].name+'_timeOfShown', Product.all[centerIndex].shown);
+    localStorage.setItem( Product.all[rightIndex].name+'_timeOfShown',  Product.all[rightIndex].shown);
   
     }
   
@@ -98,15 +107,21 @@ function renderNewProduct() {
       const clickedElement = event.target;
       if( clickedElement.id == 'leftImage' || clickedElement.id == 'centerImage' || clickedElement.id == 'rightImage' ) {
         if( clickedElement.id == 'leftImage' ) {
+          Product.all[leftProductIndex].clicks = Number(localStorage.getItem(Product.all[leftProductIndex].name));
           Product.all[leftProductIndex].clicks++;
+          localStorage.setItem(Product.all[leftProductIndex].name, Product.all[leftProductIndex].clicks)
         }
 
         if( clickedElement.id == 'centerImage' ) {
+             Product.all[centerProductIndex].clicks = Number(localStorage.getItem(Product.all[centerProductIndex].name));
             Product.all[centerProductIndex].clicks++;
+            localStorage.setItem(Product.all[centerProductIndex].name, Product.all[centerProductIndex].clicks);
           }
   
         if( clickedElement.id == 'rightImage' ) {
+            Product.all[rightProductIndex].clicks = Number(localStorage.getItem(Product.all[rightProductIndex].name));
             Product.all[rightProductIndex].clicks++;
+            localStorage.setItem(Product.all[rightProductIndex].name, Product.all[rightProductIndex].clicks)
         }
         
         Product.counter++;
@@ -124,6 +139,8 @@ function renderNewProduct() {
    
     
   }
+  localStorage.setItem('Products', JSON.stringify(Product.all));
+  Product.all = JSON.parse(localStorage.getItem('Products'));
 
   imageSection.addEventListener( 'click', handleClick );
 
